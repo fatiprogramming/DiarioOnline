@@ -1,0 +1,64 @@
+﻿@page "/entries"
+
+<PageTitle>Entries</PageTitle>
+@using Microsoft.EntityFrameworkCore
+@using diarioOnlineAPI.Models
+@using diarioOnlineAPI.Data
+@using diarioOnlineAPI.Migrations
+@using diarioOnlineAPI.Controller
+
+@using Microsoft.AspNetCore.Components.Web
+@using System.Text.Json;
+@rendermode InteractiveServer
+@inject HttpClient Http
+@inject AppDbContext DbContext
+
+<h4>Add New Entry</h4>
+<EditForm Model="newEntry" OnValidSubmit="HandleSubmit">
+    <DataAnnotationsValidator />
+    <ValidationSummary />
+
+    <div class="form-group">
+        <label for="content">Content</label>
+        <InputTextArea id="content" @bind-Value="newEntry.Content" class="form-control" required />
+        <span class="text-danger">@errorMessage</span>
+    </div>
+
+    <button type="submit" class="btn btn-primary">Add Entry</button>
+</EditForm>
+
+@code {
+    private List<DiaryEntries>? diaryEntries;
+    private DiaryEntries newEntry = new DiaryEntries();
+    private string errorMessage;
+    private async Task HandleSubmit()
+    {
+        // Validación inicial
+        if (string.IsNullOrWhiteSpace(newEntry.Content))
+        {
+            errorMessage = "Content is required.";
+            return;
+        }
+
+        newEntry.CreatedAt = DateTime.UtcNow;
+
+        try
+        {
+            // Agrega la nueva entrada a la base de datos
+            DbContext.DiaryEntries.Add(newEntry);
+            await DbContext.SaveChangesAsync();
+
+            // Recarga las entradas después de agregar una nueva
+            diaryEntries = await DbContext.DiaryEntries.ToListAsync();
+
+            // Reinicia la entrada nueva
+            newEntry = new DiaryEntries();
+            errorMessage = null; // Limpia el mensaje de error
+        }
+        catch (Exception ex)
+        {
+            errorMessage = $"Error al agregar entrada: {ex.Message}";
+            Console.WriteLine($"Error: {errorMessage}");
+        }
+    }
+}

@@ -1,0 +1,85 @@
+﻿
+@page "/"
+<PageTitle>Index</PageTitle>
+@rendermode InteractiveServer
+@using Microsoft.EntityFrameworkCore
+@using diarioOnlineAPI.Models
+@using diarioOnlineAPI.Data
+@using diarioOnlineAPI.Migrations
+@using diarioOnlineAPI.Controller
+@using Microsoft.AspNetCore.Components.Web
+
+@inject HttpClient Http
+@inject AppDbContext DbContext
+
+<h3>Diary Entries</h3>
+
+@if (diaryEntries == null)
+{
+    <p><em>Cargando...</em></p>
+}
+else if (!diaryEntries.Any())
+{
+    <p>No hay entradas en el diario.</p>
+}
+else
+{
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Content</th>
+                <th>Created At</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var entry in diaryEntries)
+            {
+                <tr>
+                    <td>@entry.Id</td>
+                    <td>@entry.Content</td>
+                    <td>@entry.CreatedAt.ToString("g")</td>
+                    <td>
+                        <button @onclick="() => DeleteEntry(entry.Id)" @onclick:preventDefault class="btn btn-danger">Delete</button>
+                    </td>
+                </tr>
+            }
+        </tbody>
+    </table>
+}
+
+
+
+@code {
+    private List<DiaryEntries>? diaryEntries;
+  
+
+    protected override async Task OnInitializedAsync()
+    {
+        try
+        {
+            diaryEntries = await DbContext.DiaryEntries.ToListAsync();
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Error al cargar las entradas: {ex.Message}");
+        }
+    }
+
+ 
+
+    private async Task DeleteEntry(int id)
+    {
+        var entryToDelete = await DbContext.DiaryEntries.FindAsync(id);
+        if (entryToDelete != null)
+        {
+            DbContext.DiaryEntries.Remove(entryToDelete);
+            await DbContext.SaveChangesAsync();
+
+         
+            diaryEntries = await DbContext.DiaryEntries.ToListAsync();
+        }
+    }
+
+}

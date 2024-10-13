@@ -1,0 +1,60 @@
+﻿@page "/emotions"
+@using diarioOnline.Models
+@rendermode InteractiveServer
+
+<h2>¿Cómo te sientes hoy?</h2>
+
+@if (!showEmotionButtons)
+{
+    <h2>@(new MarkupString(selectedPhrase))</h2>
+    <button @onclick="Reset">Elegir otra emoción</button>
+}
+else
+{
+    <div class="emotion-buttons">
+        <button class="emotionButton" @onclick='() => SelectEmotion("Neutral")'>
+            😊 <br />Neutral
+        </button>
+        <button class="emotionButton" @onclick='() => SelectEmotion("Feliz")'>
+            😃<br /> Feliz
+        </button>
+        <button class="emotionButton" @onclick='() => SelectEmotion("Triste")'>
+            😢<br /> Triste
+        </button>
+        <button class="emotionButton"  @onclick='() => SelectEmotion("Enojado")'>
+            😡<br />Enojado
+        </button>
+        <button class="emotionButton"  @onclick='() => SelectEmotion("Ansioso")'>
+            😰 <br />Ansioso
+        </button>
+    </div>
+}
+
+@code {
+    private Emotions emotions = new Emotions();
+    private string selectedPhrase = "Selecciona una emoción para ver una frase.";
+    private Random random = new Random();
+    private bool showEmotionButtons = true; 
+
+    private void SelectEmotion(string emotion)
+    {
+        var selectedList = emotions.GetPhrasesByEmotion(emotion);
+
+        if (selectedList.Count > 0)
+        {
+            int index = random.Next(selectedList.Count);
+            selectedPhrase = $"<em>{selectedList[index]}</em>"; 
+            showEmotionButtons = false;
+        }
+        else
+        {
+            selectedPhrase = "<em>No hay frases disponibles.</em>";
+        }
+    }
+
+    private void Reset()
+    {
+        selectedPhrase = "Selecciona una emoción para ver una frase.";
+        showEmotionButtons = true; // Muestra los botones nuevamente
+    }
+}

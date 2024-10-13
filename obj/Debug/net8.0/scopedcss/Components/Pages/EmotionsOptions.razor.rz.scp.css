@@ -1,0 +1,26 @@
+/* EmotionsOptions.razor.css */
+
+
+.emotion-buttons button[b-2nma90uxal] {
+    background-color: #3498db;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 10px 20px;
+    margin: 5px;
+    cursor: pointer;
+}
+
+    .emotion-buttons button:hover[b-2nma90uxal] {
+        background-color: #2980b9;
+    }
+
+.selected-phrase[b-2nma90uxal] {
+    text-align: center;
+    font-size: 1.2em;
+    margin: 20px;
+    padding: 10px;
+    border: 1px solid #3498db;
+    border-radius: 5px;
+    background-color: #ecf0f1;
+}
