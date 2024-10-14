@@ -2,30 +2,31 @@
 @using diarioOnline.Models
 @rendermode InteractiveServer
 
-<h2>¿Cómo te sientes hoy?</h2>
+<h2  class="sentimiento-hoy">¿Cómo te sientes hoy?</h2>
 
 @if (!showEmotionButtons)
 {
-    <h2>@(new MarkupString(selectedPhrase))</h2>
-    <button @onclick="Reset">Elegir otra emoción</button>
+    <h4>@(new MarkupString(selectedPhrase))</h4>
+    <br />
+	<button class="reset-emotion" @onclick="Reset">Elegir otra<strong> emoción</strong></button>
 }
 else
 {
     <div class="emotion-buttons">
         <button class="emotionButton" @onclick='() => SelectEmotion("Neutral")'>
-            😊 <br />Neutral
+           <span>😊</span> <br />Neutral
         </button>
         <button class="emotionButton" @onclick='() => SelectEmotion("Feliz")'>
-            😃<br /> Feliz
+			<span>😃</span><br /> Feliz
         </button>
         <button class="emotionButton" @onclick='() => SelectEmotion("Triste")'>
-            😢<br /> Triste
+			<span>😢</span><br /> Triste
         </button>
         <button class="emotionButton"  @onclick='() => SelectEmotion("Enojado")'>
-            😡<br />Enojado
+			<span>😡</span><br />Enojado
         </button>
         <button class="emotionButton"  @onclick='() => SelectEmotion("Ansioso")'>
-            😰 <br />Ansioso
+			<span>😰</span> <br />Ansioso
         </button>
     </div>
 }
@@ -46,10 +47,7 @@ else
             selectedPhrase = $"<em>{selectedList[index]}</em>"; 
             showEmotionButtons = false;
         }
-        else
-        {
-            selectedPhrase = "<em>No hay frases disponibles.</em>";
-        }
+     
     }
 
     private void Reset()

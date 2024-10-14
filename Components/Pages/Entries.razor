@@ -13,19 +13,20 @@
 @inject HttpClient Http
 @inject AppDbContext DbContext
 
-<h4>Add New Entry</h4>
+<h4>Escribe en tu diario</h4>
 <EditForm Model="newEntry" OnValidSubmit="HandleSubmit">
     <DataAnnotationsValidator />
     <ValidationSummary />
 
     <div class="form-group">
-        <label for="content">Content</label>
+        <label for="content"></label>
         <InputTextArea id="content" @bind-Value="newEntry.Content" class="form-control" required />
         <span class="text-danger">@errorMessage</span>
     </div>
-
-    <button type="submit" class="btn btn-primary">Add Entry</button>
+	<br />
+    <button type="submit" class="btn-sub">Añadir</button>
 </EditForm>
+
 
 @code {
     private List<DiaryEntries>? diaryEntries;

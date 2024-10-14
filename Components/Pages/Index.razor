@@ -12,7 +12,7 @@
 @inject HttpClient Http
 @inject AppDbContext DbContext
 
-<h3>Diary Entries</h3>
+<h3>Resumen de tus entradas en el diario</h3>
 
 @if (diaryEntries == null)
 {
@@ -28,9 +28,9 @@ else
         <thead>
             <tr>
                 <th>ID</th>
-                <th>Content</th>
-                <th>Created At</th>
-                <th>Actions</th>
+                <th>Contenido</th>
+                <th>Fecha</th>
+                <th>Acciones</th>
             </tr>
         </thead>
         <tbody>
@@ -41,7 +41,7 @@ else
                     <td>@entry.Content</td>
                     <td>@entry.CreatedAt.ToString("g")</td>
                     <td>
-                        <button @onclick="() => DeleteEntry(entry.Id)" @onclick:preventDefault class="btn btn-danger">Delete</button>
+                        <button @onclick="() => DeleteEntry(entry.Id)" @onclick:preventDefault class="btn btn-danger">Borrar</button>
                     </td>
                 </tr>
             }

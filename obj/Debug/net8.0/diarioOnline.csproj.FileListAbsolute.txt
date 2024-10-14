@@ -329,3 +329,5 @@ D:\diarioOnline\diarioOnline\obj\Debug\net8.0\diarioOnline.pdb
 D:\diarioOnline\diarioOnline\obj\Debug\net8.0\diarioOnline.genruntimeconfig.cache
 D:\diarioOnline\diarioOnline\obj\Debug\net8.0\ref\diarioOnline.dll
 D:\diarioOnline\diarioOnline\obj\Debug\net8.0\scopedcss\Components\Pages\EmotionsOptions.razor.rz.scp.css
+D:\diarioOnline\diarioOnline\obj\Debug\net8.0\diarioOnline.sourcelink.json
+D:\diarioOnline\diarioOnline\obj\Debug\net8.0\scopedcss\Components\Pages\Entries.razor.rz.scp.css

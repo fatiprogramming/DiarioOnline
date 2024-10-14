@@ -1,0 +1,16 @@
+﻿.btn-sub {
+    background-color: #cc5577;
+    color: antiquewhite;
+    border: none;
+    border-radius: 30%;
+    padding: 0.7rem 1rem;
+    margin: 0.3rem;
+    cursor: pointer;
+}
+    .btn-sub:hover {
+        background-color: #cc5577;
+        background-image: none;
+        border: dashed;
+        border-color: burlywood;
+        font-size: 1.5rem;
+    }
