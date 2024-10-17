@@ -1,0 +1,56 @@
+﻿@page "/games"
+@rendermode InteractiveServer
+
+<h3>Prueba algunos juegos</h3>
+<br />
+<div class="guess-number">
+<h4>Adivina el número del 1 al 10</h4>
+    <input type="number" @bind="userGuess" min="1" max="10" disabled="@(!numberGenerated)" />
+<button class="guess" @onclick="GenerateRandomNumber"> Generar número </button>
+    <button class="guess" @onclick="GuessNumber" disabled="@(!numberGenerated)"> Adivinar</button>
+</div>
+<br />
+<p class="message">@message</p>
+
+<hr />
+<h4>El clásico 2048</h4>
+<div class="g2048">
+	<iframe src="https://2048game.com/"  frameborder="0"  allowfullscreen></iframe>
+</div>
+
+@code {
+    private Random random = new Random();
+    private int randomNumber;
+    private int userGuess;
+    private string message = "No se ha generado ningún número.";
+    private bool numberGenerated;
+    private int errorCount = 0;
+
+    private void GenerateRandomNumber()
+    {
+        randomNumber = random.Next(1, 11); 
+        message = "Número generado"; 
+        numberGenerated = true;
+        
+    }
+
+    private void GuessNumber()
+    {
+        if (userGuess == randomNumber)
+        {
+            message = "¡Correcto! Has adivinado el número. Íntentos usados: " + errorCount;
+            
+            errorCount = 0;
+            numberGenerated = false;
+        }
+        else
+        {
+            errorCount++;
+            message = "Incorrecto. Intenta de nuevo. Número de fallos: " + errorCount ;
+            
+     
+        }
+        StateHasChanged();
+    }
+}
+
